@@ -10,3 +10,6 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .input-append .add-on, .input-prepend .add-on {
     height: 35px;
 }
+.in{
+  margin-left: 5px;
+}
