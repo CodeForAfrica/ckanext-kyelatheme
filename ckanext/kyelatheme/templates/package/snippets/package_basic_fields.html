@@ -1,0 +1,6 @@
+{% ckan_extends %}
+{% block package_basic_fields_custom %}
+  <div id='mapid' style="height:220px;"></div>
+  <br>
+  {{ form.input('spatial', label=_('Location'), id='field-spatial', placeholder=_('Dataset Geolocation'),value=data.spatial, error=errors.spatial, classes=['control-medium'])}}
+{% endblock %}

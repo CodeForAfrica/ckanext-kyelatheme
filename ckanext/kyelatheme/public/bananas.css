@@ -8,8 +8,25 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 .input-append .add-on, .input-prepend .add-on {
-    height: 35px;
+  height: 35px;
 }
+
 .in{
   margin-left: 5px;
+}
+
+.flash-messages{
+  margin-top: 35px;
+}
+
+.btn-primary {
+  padding: 0.8rem;
+}
+
+.dataset-map-expanded .wrapper {
+  margin-top: 0px;
+  }
+
+.dataset-map-expanded #dataset-map {
+  top: auto;
 }
