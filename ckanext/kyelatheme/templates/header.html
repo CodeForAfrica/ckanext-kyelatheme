@@ -44,18 +44,23 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+              {% if c.userobj %}
                 <li><a href="/">Home</a></li>
                 <li><a href="/dataset">Datasets</a></li>
                 <li><a href="/organization">Organizations</a></li>
                 <li><a href="/groups">Groups</a></li>
                 <li><a href='/reminders'>Reminders</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="/about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
+                {% else %}
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+              {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>
 
-
+    {% if c.userobj %}
     <!-- Start Side Menu -->
     <div class="side">
         <a href="#" class="close-side"><i class="fa fa-times"></i></a>
@@ -66,7 +71,8 @@
               <li><a href="/dataset"><span class="text">Datasets</span></a></li>
               <li><a href="/organization"><span class="text">Organizations</span></a></li>
               <li><a href="/groups"><span class="text">Groups</span></a></li>
-              <li><a href="#about"><span class="text">About</span></a></li>
+              <li><a href='/reminders'>Reminders</a></li>
+              <li><a href="/about"><span class="text">About</span></a></li>
               <li><a href="#contact"><span class="text">Contact</span></a></li>
             </ul>
         </div>
@@ -131,5 +137,5 @@
         </div>
     </div>
     <!-- End Side Menu -->
-
+    {% endif %}
 </nav>
