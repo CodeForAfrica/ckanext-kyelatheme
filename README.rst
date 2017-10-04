@@ -61,7 +61,7 @@ To install ckanext-kyelatheme:
 
 2. Install the ckanext-kyelatheme Python package into your virtual environment::
 
-     pip install pip install git+https://github.com/CodeForTanzania/ckanext-kyelatheme.git#egg=ckanext-kyelatheme
+     pip install git+https://github.com/CodeForTanzania/ckanext-kyelatheme.git#egg=ckanext-kyelatheme
 
 3. Add ``kyelatheme`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
