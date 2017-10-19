@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed white bootsnav on no-full">
+<nav class="navbar navbar-default white bootsnav on no-full">
     <div class="container">
         <!-- Start Atribute Navigation -->
         <div class="attr-nav">
@@ -6,17 +6,10 @@
                 {% if c.userobj %}
                 {% set new_activities = h.new_activities() %}
                 {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
-                <li class="dropdown">
-                    <a href="{{ h.url_for(controller='user', action='dashboard') }}"
-                    class="dropdown-toggle" data-toggle="dropdown" title="{{ notifications_tooltip }}" >
-                        <i class="fa fa-bell"></i>
-                        <span class="badge">{{ new_activities }}</span>
-                    </a>
-                </li>
+
                 {% endif %}
-                <!--<li class="search"><a href="#"><i class="fa fa-search"></i></a></li>-->
-                <li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>
-            </ul>
+
+             </ul>
         </div>
         <!-- End Atribute Navigation -->
 
@@ -29,7 +22,6 @@
               {% if g.site_logo %}
                 <a class="navbar-brand" href="{{ h.url_for('home') }}">
                     <img src="/assets/images/logo.png" class="logo logo-display m-top-10" alt="">
-                    <img src="/assets/images/logo.jpg" class="logo logo-scrolled" alt="">
                 </a>
               {% else %}
               <h1>
@@ -45,16 +37,52 @@
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               {% if c.userobj %}
-                <li><a href="/">Home</a></li>
+              {% set new_activities = h.new_activities() %}
+              <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
+                {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
+                <a href="{{ h.url_for(controller='user', action='dashboard') }}" title="{{ notifications_tooltip }}">
+                  <span class="text">{{ _('Dashboard') }}</span>
+                  <span class="badge">{{ new_activities }}</span>
+                </a>
+              </li>
                 <li><a href="/dataset">Datasets</a></li>
                 <li><a href="/organization">Organizations</a></li>
                 <li><a href="/groups">Groups</a></li>
                 <li><a href='/reminders'>Reminders</a></li>
                 <li><a href="/about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                {% block header_account_logged %}
+                {% if c.userobj.sysadmin %}
+                  <li>
+                    <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings') }}">
+                      <span class="text">{{ _('Sysadmin Settings') }}</span>
+                    </a>
+                  </li>
+                {% endif %}
+                <li>
+                  <a href="{{ h.url_for(controller='user', action='read', id=c.userobj.name) }}" title="{{ _('View profile') }}">
+                    <span class="username">{{  _('View profile') }}</span>
+                  </a>
+                </li>
+
+                {% block header_account_settings_link %}
+                  <li>
+                    <a href="{{ h.url_for(controller='user', action='edit', id=c.userobj.name) }}" title="{{ _('Edit settings') }}">
+                      <span class="text">{{ _('Edit Profile') }}</span>
+                    </a>
+                  </li>
+                {% endblock %}
+                {% block header_account_log_out_link %}
+                  <li>
+                    <a href="{{ h.url_for('/user/_logout') }}" title="{{ _('Log out') }}">
+                      <i class="fa fa-sign-out" aria-hidden="true"></i>
+                      <span class="text">{{ _('Log out') }}</span>
+                    </a>
+                  </li>
+                {% endblock %}
+                {% endblock %}
                 {% else %}
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
+                <li><a href="/user/login">Login</a></li>
+                <li><a href="/user/register">Register</a></li>
               {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -78,62 +106,7 @@
         </div>
         <div class="widget">
             <h6 class="title">Account</h6>
-            {% block header_account_container_content %}
-              {% if c.userobj %}
-                <div class="account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
-                  <ul class="unstyled">
-                    {% block header_account_logged %}
-                    {% if c.userobj.sysadmin %}
-                      <li>
-                        <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings') }}">
-                          <span class="text">{{ _('Sysadmin Settings') }}</span>
-                        </a>
-                      </li>
-                    {% endif %}
-                    <li>
-                      <a href="{{ h.url_for(controller='user', action='read', id=c.userobj.name) }}" title="{{ _('View profile') }}">
-                        <span class="username">{{  _('View profile') }}</span>
-                      </a>
-                    </li>
-                    {% set new_activities = h.new_activities() %}
-                    <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
-                      {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
-                      <a href="{{ h.url_for(controller='user', action='dashboard') }}" title="{{ notifications_tooltip }}">
-                        <span class="text">{{ _('Dashboard') }}</span>
-                        <span class="badge">{{ new_activities }}</span>
-                      </a>
-                    </li>
-                    {% block header_account_settings_link %}
-                      <li>
-                        <a href="{{ h.url_for(controller='user', action='edit', id=c.userobj.name) }}" title="{{ _('Edit settings') }}">
-                          <span class="text">{{ _('Edit Profile') }}</span>
-                        </a>
-                      </li>
-                    {% endblock %}
-                    {% block header_account_log_out_link %}
-                      <li>
-                        <a href="{{ h.url_for('/user/_logout') }}" title="{{ _('Log out') }}">
-                          <i class="fa fa-sign-out" aria-hidden="true"></i>
-                          <span class="text">{{ _('Log out') }}</span>
-                        </a>
-                      </li>
-                    {% endblock %}
-                    {% endblock %}
-                  </ul>
-                </div>
-              {% else %}
-                <nav class="account not-authed">
-                  <ul class="unstyled">
-                    {% block header_account_notlogged %}
-                    <li>{% link_for _('Log in'), controller='user', action='login' %}</li>
-                    {% if h.check_access('user_create') %}
-                      <li>{% link_for _('Register'), controller='user', action='register', class_='sub' %}</li>
-                    {% endif %}
-                    {% endblock %}
-                  </ul>
-                </nav>
-              {% endif %}
-            {% endblock %}
+
         </div>
     </div>
     <!-- End Side Menu -->
