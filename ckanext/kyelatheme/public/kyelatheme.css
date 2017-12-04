@@ -38,3 +38,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
   bottom:-1px;
   width:100%;
 }
+
+.toolbar .breadcrumb a {
+    color: #444;
+    text-shadow: none;
+}
